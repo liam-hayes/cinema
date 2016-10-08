@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Screen <%= @screen.id %></h1>
+
+<p>
+  <strong>Screen size:</strong>
+  <%= @screen.screen_size %>
+</p>
+
+<%= link_to 'Edit', edit_screen_path(@screen) %> |
+<%= link_to 'Back', screens_path %>

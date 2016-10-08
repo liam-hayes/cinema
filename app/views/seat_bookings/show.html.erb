@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Booking:</strong>
+  <%= @seat_booking.booking_id %>
+</p>
+
+<p>
+  <strong>Seat:</strong>
+  <%= @seat_booking.seat_id %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @seat_booking.type %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @seat_booking.price %>
+</p>
+
+<%= link_to 'Edit', edit_seat_booking_path(@seat_booking) %> |
+<%= link_to 'Back', seat_bookings_path %>

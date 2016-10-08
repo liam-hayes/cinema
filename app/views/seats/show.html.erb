@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Screen:</strong>
+  <%= @seat.screen_id %>
+</p>
+
+<p>
+  <strong>Seat number:</strong>
+  <%= @seat.seat_number %>
+</p>
+
+<p>
+  <strong>Row:</strong>
+  <%= @seat.row %>
+</p>
+
+<%= link_to 'Edit', edit_seat_path(@seat) %> |
+<%= link_to 'Back', seats_path %>

@@ -1,0 +1,1 @@
+json.array! @seat_bookings, partial: 'seat_bookings/seat_booking', as: :seat_booking
