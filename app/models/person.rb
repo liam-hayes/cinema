@@ -6,4 +6,5 @@ class Person < ActiveRecord::Base
 	validates :phone, presence: true
 	validates :password_digest, presence: true
 	validates :email, presence: true
+	validates :email, uniqueness: true
 end

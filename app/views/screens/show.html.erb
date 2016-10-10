@@ -1,10 +1,58 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Screen <%= @screen.id %></h1>
+<h1> Screen <%= @screen.name %></h1>
 
 <p>
   <strong>Screen size:</strong>
   <%= @screen.screen_size %>
+</p>
+
+<p>
+	<br></br>
+	<strong>Screenings:</strong>
+	
+	<table border = "1" cellpadding = "10">
+		<thead>
+			<tr>
+				<th>Film</th>
+				<th>Date</th>
+				<th>Start time</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<% @screen.screenings.each do|screening|%>
+				<tr>
+					<td><%= screening.film.title  %></td>
+					<td><%= screening.date  %></td>
+					<td><%= screening.start_time  %></td>
+				</tr>
+			<%end%>	
+		</tbody>
+	</table>
+</p>
+
+<p>
+	<br></br>
+	<strong>Seats:</strong>
+	
+	<table border = "1" cellpadding = "10">
+		<thead>
+			<tr>
+				<th>Seat Number</th>
+				<th>Row</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<% @screen.seats.each do|seat|%>
+				<tr>
+					<td><%= seat.seat_number  %></td>
+					<td><%= seat.row  %></td>
+				</tr>
+			<%end%>	
+		</tbody>
+	</table>
 </p>
 
 <%= link_to 'Edit', edit_screen_path(@screen) %> |

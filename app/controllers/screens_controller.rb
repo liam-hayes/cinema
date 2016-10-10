@@ -69,6 +69,6 @@ class ScreensController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def screen_params
-      params.require(:screen).permit(:screen_size)
+      params.require(:screen).permit(:screen_size, :name)
     end
 end

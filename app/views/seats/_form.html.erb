@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :screen_id %><br>
-    <%= f.number_field :screen_id %>
+    <%= f.collection_select :screen_id, Screen.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :seat_number %><br>

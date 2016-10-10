@@ -17,7 +17,7 @@
     <% @screenings.each do |screening| %>
       <tr>
         <td><%= screening.film.title %></td>
-        <td><%= screening.screen_id %></td>
+        <td><%= screening.screen.name %></td>
         <td><%= screening.date %></td>
         <td><%= screening.start_time %></td>
         <td><%= link_to 'Show', screening %></td>

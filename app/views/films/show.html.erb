@@ -10,6 +10,7 @@
 <p>
   <strong>Run time:</strong>
   <%= @film.run_time %>
+  minutes
 </p>
 
 <p>
@@ -42,7 +43,7 @@
 		<tbody>
 			<% @film.screenings.each do|screening|%>
 				<tr>
-					<td><%= screening.screen_id  %></td>
+					<td><%= screening.screen.name  %></td>
 					<td><%= screening.date  %></td>
 					<td><%= screening.start_time  %></td>
 				</tr>

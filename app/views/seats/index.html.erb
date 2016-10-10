@@ -2,7 +2,7 @@
 
 <h1>Listing Seats</h1>
 
-<table>
+<table border = "1" cellpadding = "10">
   <thead>
     <tr>
       <th>Screen</th>
@@ -15,7 +15,7 @@
   <tbody>
     <% @seats.each do |seat| %>
       <tr>
-        <td><%= seat.screen_id %></td>
+        <td><%= seat.screen.name %></td>
         <td><%= seat.seat_number %></td>
         <td><%= seat.row %></td>
         <td><%= link_to 'Show', seat %></td>
