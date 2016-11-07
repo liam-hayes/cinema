@@ -2,6 +2,8 @@
 
 <h1> <%= @film.title %></h1>
 
+<hr>
+
 <p>
   <strong>Title:</strong>
   <%= @film.title %>
@@ -24,12 +26,11 @@
 </p>
 
 <p>
-  <strong>Image:</strong>
   <%=image_tag(@film.image, :size => "100x100")%>
 </p>
 <p>
 	<br></br>
-	<strong>Screenings:</strong>
+	<h2>Screenings:</h2>
 	
 	<table border = "1" cellpadding = "10">
 		<thead>
@@ -50,6 +51,29 @@
 			<%end%>	
 		</tbody>
 	</table>
+</p>
+
+<br></br>
+	<h2>Create a new screening:</h2>
+<p>
+	<%= form_for([@film, Screening.new]) do |f| %>
+
+	  <div class="field">
+		<%= f.label :screen_id %><br>
+		<%= f.collection_select :screen_id, Screen.all, :id, :name %>
+	  </div>
+	  <div class="field">
+		<%= f.label :date %><br>
+		<%= f.date_field :date %>
+	  </div>
+	  <div class="field">
+		<%= f.label :start_time %><br>
+		<%= f.text_field :start_time %>
+	  </div>
+	  <div class="actions">
+		<%= f.submit %>
+	  </div>
+	<% end %>
 </p>
 
 <%= link_to 'Edit', edit_film_path(@film) %> |

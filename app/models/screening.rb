@@ -7,4 +7,5 @@ class Screening < ActiveRecord::Base
 	validates :screen_id, presence: true
 	validates :date, presence: true
 	validates :start_time, presence: true
+	validates_format_of :start_time, :with => /\A([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/i, :on => :create
 end

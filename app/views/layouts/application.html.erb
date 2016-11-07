@@ -8,6 +8,36 @@
 </head>
 <body>
 
+	<div id = "banner">
+		<%= image_tag("cinema.jpg", :size => "100x50")%>
+		<%= "Cineworld"%>
+	</div>
+	
+	<div id = "nav">
+		<ul>
+			<% if !signed_in? %>
+				<li><%= link_to "Sign In", login_path%></li>
+			<%else%>
+				<li>Signed in as <%=@current_person.first_name%></li>
+				<li><%=link_to "Sign Out", logout_path%></li>
+			<%end%>
+		
+			<li><%=link_to "Films", films_path%></li>
+			<li><%=link_to "Screenings", screenings_path%></li>
+			<li><%=link_to "Create account", new_person_path%></li>
+			<li><%=mail_to "liam.hayes@mydit.ie", "Contact us"%></li>
+			
+			<% if !adminsigned_in? %>
+				<li><%= link_to "Admin Sign In", adminlogin_path%></li>
+			<%else%>
+				<li>Signed in as admin: <%=@admincurrent_user.first_name%></li>
+				<li><%=link_to "Sign Out", adminlogout_path%></li>
+			<%end%>
+			
+			<li><%=link_to "Showing today", showing_today_path%></li>
+		</ul>
+	</div>
+			
 <%= yield %>
 
 </body>

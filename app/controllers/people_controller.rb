@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :adminauthorise, only: [:new, :create, :index]
+  
   # GET /people
   # GET /people.json
   def index
@@ -69,6 +70,6 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :phone, :email, :password_digest)
+      params.require(:person).permit(:first_name, :last_name, :phone, :email, :password, :password_confirmation)
     end
 end

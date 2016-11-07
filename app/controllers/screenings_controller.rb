@@ -3,6 +3,10 @@ class ScreeningsController < ApplicationController
 
   # GET /screenings
   # GET /screenings.json
+  def showing_today
+	@screenings = Screening.all
+  end
+  
   def index
     @screenings = Screening.all
   end
@@ -24,11 +28,13 @@ class ScreeningsController < ApplicationController
   # POST /screenings
   # POST /screenings.json
   def create
-    @screening = Screening.new(screening_params)
-
+	@film = Film.find(params[:film_id])
+    @screening = @film.screenings.new(screening_params)
+	@screening.save
+	
     respond_to do |format|
       if @screening.save
-        format.html { redirect_to @screening, notice: 'Screening was successfully created.' }
+        format.html { redirect_to @film, notice: 'Screening was successfully created.' }
         format.json { render :show, status: :created, location: @screening }
       else
         format.html { render :new }

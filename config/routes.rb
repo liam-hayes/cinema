@@ -1,16 +1,41 @@
 Rails.application.routes.draw do
+  resources :admins
+  get 'pages/home'
+
+  get 'pages/about'
+
+  controller :sessions do 
+	get 'login' => :new
+	post 'login' => :create
+	get 'logout' => :destroy
+	delete 'logout' => :destroy
+	get 'adminlogin' => :adminnew
+	post 'adminlogin' => :admincreate
+	get 'adminlogout' => :admindestroy
+	delete 'adminlogout' => :admindestroy
+  end
+  
   resources :seat_bookings
   resources :bookings
   resources :seats
-  resources :screens
-  resources :screenings
-  resources :films
+  resources :screens do
+	resources :seats
+  end
+  resources :screenings 
+  resources :films do 
+	resources :screenings
+  end
   resources :people
+  
+  get '/showing_today', :to => 'screenings#showing_today'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+  
+  root :to => 'pages#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

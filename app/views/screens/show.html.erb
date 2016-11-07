@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1> Screen <%= @screen.name %></h1>
+<hr>
 
 <p>
   <strong>Screen size:</strong>
@@ -9,7 +10,7 @@
 
 <p>
 	<br></br>
-	<strong>Screenings:</strong>
+	<h2>Screenings:</h2>
 	
 	<table border = "1" cellpadding = "10">
 		<thead>
@@ -34,7 +35,7 @@
 
 <p>
 	<br></br>
-	<strong>Seats:</strong>
+	<h2>Seats:</h2>
 	
 	<table border = "1" cellpadding = "10">
 		<thead>
@@ -53,6 +54,24 @@
 			<%end%>	
 		</tbody>
 	</table>
+</p>
+
+<br></br>
+	<h2>Create a new Seat:</h2>
+<p>
+	<%= form_for([@screen, Seat.new]) do |f| %>
+	  <div class="field">
+		<%= f.label :seat_number %><br>
+		<%= f.number_field :seat_number %>
+	  </div>
+	  <div class="field">
+		<%= f.label :row %><br>
+		<%= f.text_field :row %>
+	  </div>
+	  <div class="actions">
+		<%= f.submit %>
+	  </div>
+	<% end %>
 </p>
 
 <%= link_to 'Edit', edit_screen_path(@screen) %> |

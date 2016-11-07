@@ -24,11 +24,14 @@ class SeatsController < ApplicationController
   # POST /seats
   # POST /seats.json
   def create
-    @seat = Seat.new(seat_params)
+    #@seat = Seat.new(seat_params)
+	@screen = Screen.find(params[:screen_id])
+	@seat = @screen.seats.new(seat_params)
+	@seat.save
 
     respond_to do |format|
       if @seat.save
-        format.html { redirect_to @seat, notice: 'Seat was successfully created.' }
+        format.html { redirect_to @screen, notice: 'Seat was successfully created.' }
         format.json { render :show, status: :created, location: @seat }
       else
         format.html { render :new }
