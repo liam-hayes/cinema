@@ -6,6 +6,17 @@ class FilmsController < ApplicationController
   def index
     @films = Film.all
   end
+  
+  def search
+	@films = Film.search params[:query]
+	unless @films.empty?
+		render 'index'
+	else
+		flash[:notice] = 'No records match that search'
+		@films = Film.all
+		render 'index'
+	end
+  end
 
   # GET /films/1
   # GET /films/1.json

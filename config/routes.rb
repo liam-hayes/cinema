@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :people
   
   get '/showing_today', :to => 'screenings#showing_today'
+  get 'search', :to => 'films#search'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

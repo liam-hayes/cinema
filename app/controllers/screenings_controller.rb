@@ -3,6 +3,16 @@ class ScreeningsController < ApplicationController
 
   # GET /screenings
   # GET /screenings.json
+  def search
+	@screenings = Screening.search params[:query]
+	unless @screenings.empty?
+		reder 'index'
+	else 
+		flash[:notice] = 'No record matches that search'
+		reder 'index'
+	end
+  end
+  
   def showing_today
 	@screenings = Screening.all
   end
