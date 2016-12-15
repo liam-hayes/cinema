@@ -1,5 +1,7 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :authorise
+  skip_before_action :adminauthorise, only: [:new, :create]
 
   # GET /bookings
   # GET /bookings.json
@@ -25,14 +27,20 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
-
+	@booking.add_seat_bookings_from_cart(current_cart)
+	@booking.person_id = @current_person.id
+	
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
-        format.json { render :show, status: :created, location: @booking }
+		Cart.destroy(session[:cart_id])
+		session[:screening_id] = nil
+		session[:cart_id] = nil
+			format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+			format.json { render :show, status: :created, location: @booking }
       else
-        format.html { render :new }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+		@cart = current_cart
+			format.html { render :new }
+			format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,6 +77,6 @@ class BookingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:person_id, :screening_id)
+      params.require(:booking).permit(:person_id, :screening_id, :paymethod, :screening_id, :total)
     end
 end

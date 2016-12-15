@@ -1,6 +1,7 @@
 class SeatBookingsController < ApplicationController
   before_action :set_seat_booking, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :adminauthorise, only: [:new, :create, :destroy]
+  
   # GET /seat_bookings
   # GET /seat_bookings.json
   def index
@@ -24,11 +25,14 @@ class SeatBookingsController < ApplicationController
   # POST /seat_bookings
   # POST /seat_bookings.json
   def create
-    @seat_booking = SeatBooking.new(seat_booking_params)
+	seat = Seat.find(params[:seat_id])
+	session[:screening_id] = params[:screening_id]
+	@cart = current_cart
+    @seat_booking = @cart.add_seat(seat.id)
 
     respond_to do |format|
       if @seat_booking.save
-        format.html { redirect_to @seat_booking, notice: 'Seat booking was successfully created.' }
+        format.html { redirect_to @cart, notice: 'Seat booking was successfully created.' }
         format.json { render :show, status: :created, location: @seat_booking }
       else
         format.html { render :new }
@@ -69,6 +73,6 @@ class SeatBookingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def seat_booking_params
-      params.require(:seat_booking).permit(:booking_id, :seat_id, :type, :price)
+      params.require(:seat_booking).permit(:booking_id, :seat_id, :ticket_type, :price)
     end
 end

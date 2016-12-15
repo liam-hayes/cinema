@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105194226) do
+ActiveRecord::Schema.define(version: 20161215065457) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "emp_number"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20161105194226) do
     t.integer  "screening_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "paymethod"
+    t.decimal  "total"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "films", force: :cascade do |t|
@@ -68,10 +75,11 @@ ActiveRecord::Schema.define(version: 20161105194226) do
   create_table "seat_bookings", force: :cascade do |t|
     t.integer  "booking_id"
     t.integer  "seat_id"
-    t.string   "type"
+    t.string   "ticket_type"
     t.float    "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "cart_id"
   end
 
   create_table "seats", force: :cascade do |t|

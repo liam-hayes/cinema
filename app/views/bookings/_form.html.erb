@@ -10,16 +10,26 @@
       </ul>
     </div>
   <% end %>
-
+  
   <div class="field">
-    <%= f.label :person_id %><br>
-    <%= f.number_field :person_id %>
-	<%= f.collection_select :screen_id, Screen.all, :id, :first_name %>
+	<%= f.label :paymethod %><br />
+	<%= f.select :paymethod, ["Debit Card", "Credit Card", "Paypal"] %>
   </div>
-  <div class="field">
-    <%= f.label :screening_id %><br>
-    <%= f.number_field :screening_id %>
-  </div>
+  
+  <%= f.hidden_field :screening_id, :value => session[:screening_id] %>
+  
+  <% connection = ActiveRecord::Base.connection %>
+	<% results = connection.execute(
+	"Select * from seat_bookings where 
+		seat_bookings.cart_id = #{session[:cart_id]}") %>
+	
+  <% @total = 0 %>	
+  <% results.each do |r| %>
+	<% @total = @total + r['price'] %>
+  <% end %>
+  
+  <%= f.hidden_field :total, :value => @total %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

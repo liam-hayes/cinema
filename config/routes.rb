@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :carts
   resources :admins
   get 'pages/home'
 
@@ -26,6 +27,10 @@ Rails.application.routes.draw do
 	resources :screenings
   end
   resources :people
+  
+  resources :carts do 
+	resources :seat_bookings
+  end
   
   get '/showing_today', :to => 'screenings#showing_today'
   get 'search', :to => 'films#search'

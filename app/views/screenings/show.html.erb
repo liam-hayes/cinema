@@ -20,5 +20,56 @@
   <%= @screening.start_time %>
 </p>
 
+<br><br>
+<h1>Seats Available</h1>
+
+<% if (session[:cart_id]).nil? or session[:screening_id].to_s != @screening.id.to_s%>
+	<% connection = ActiveRecord::Base.connection %>
+	<% results = connection.execute(
+	"Select * FROM seats s where s.screen_id = #{@screening.screen.id} 
+	AND s.id NOT IN
+		 (SELECT seat_id FROM seat_bookings sb
+		 WHERE sb.booking_id IN 
+		 (SELECT id FROM bookings b
+		 WHERE b.screening_id = #{@screening.id}));") %>
+<% else %>
+	<% connection = ActiveRecord::Base.connection %>
+	<% results = connection.execute(
+	"Select * FROM seats s where s.screen_id = #{@screening.screen.id} 
+	AND s.id NOT IN
+		 (SELECT seat_id FROM seat_bookings sb
+		 WHERE sb.booking_id IN 
+		 (SELECT id FROM bookings b
+		 WHERE b.screening_id = #{@screening.id}))
+	AND s.id NOT IN
+		(SELECT seat_id FROM seat_bookings sb
+		where sb.cart_id = #{session[:cart_id]});") %>
+<% end %>
+
+<table>
+	<tr>
+		<th>Row</th>
+		<th>Seat Number</th>
+		<th>Reserve Seat</th>
+	</tr>
+
+<% results.each do |r| %>
+	<tr>
+		<td>Row: <%= r['row'] %> </td>
+		<td>Seat Number: <%= r['seat_number'] %></td>
+		<% if session[:screening_id] != nil && session[:screening_id].to_s != @screening.id.to_s %>
+			<td><p style="color:red;">unavailable (see end-note)</p></td>
+		<% else %>
+			<td><%= button_to 'Reserve seat', seat_bookings_path(seat_id: r['id'], screening_id: @screening.id)%></td>
+		<% end %>
+	</tr>
+<% end %>
+</table>
+
+<% if session[:screening_id] != nil && session[:screening_id].to_s != @screening.id.to_s %>
+			<p style="color:red;">seats for separate screenings cannot be reserved together, please empty your cart if you wish to reserve a seat at this screening</p>
+<% end %>
+			
+<br><br>
 <%= link_to 'Edit', edit_screening_path(@screening) %> |
 <%= link_to 'Back', screenings_path %>

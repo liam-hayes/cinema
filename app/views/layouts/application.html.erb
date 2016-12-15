@@ -44,6 +44,9 @@
 			
 			<li><%=link_to "Showing today", showing_today_path%></li>
 			<li><%= render '/films/search' %></li>
+			<% if session[:cart_id] != nil %>
+				<li><%= link_to "Your Cart", cart_path(session[:cart_id]) %></li>
+			<% end %>
 		</ul>
 	</div>
 			

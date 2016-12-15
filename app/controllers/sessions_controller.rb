@@ -9,8 +9,7 @@ class SessionsController < ApplicationController
 	person = Person.find_by_email(params[:email])
 	if person && person.authenticate(params[:password])
 		session[:person_id] = person.id
-		#redirect_to person
-		redirect_to session[:return_to] || root_path
+		redirect_to person
 	else
 		redirect_to login_path, alert: "Invalid user/password combination"
 		#flash.now[:error] = "Invalid email/password combination."
@@ -25,8 +24,6 @@ class SessionsController < ApplicationController
 		flash[:notice] = "You need to log in first"
 	end
 	redirect_to login_path
-	#session[:user_id] = nil
-	#redirect_to root_path, notice: "Logged out"
   end
   
   def adminnew

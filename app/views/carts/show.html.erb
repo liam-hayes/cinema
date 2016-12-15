@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+	<% @cart.seat_bookings.each do |item| %>
+		<tr>
+			<% seat = Seat.find(item.seat_id) %>
+			<td>Row: <%= seat.row %></td>
+			<td>Seat Number: <%= seat.seat_number %></td>
+		</tr>
+	<% end %>
+</table>
+
+
+<br>
+<%= button_to "Book more seats?", screening_path(session[:screening_id]), :method => :get %><br>
+<%= button_to 'Empty Cart', @cart, method: :delete, confirm: 'Are you sure?' %><br>
+<%= button_to 'Checkout', new_booking_path, :method => :get %><br>
+
+<%= link_to 'Edit', edit_cart_path(@cart) %> |
+<%= link_to 'Back', carts_path %>
